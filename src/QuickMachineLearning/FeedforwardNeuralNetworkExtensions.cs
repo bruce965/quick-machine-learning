@@ -8,7 +8,7 @@ namespace QuickMachineLearning
 
         public static void RandomizeWeightsAndBiases(this FeedforwardNeuralNetwork neuralNetwork)
         {
-            for (var layerIndex = 0; layerIndex < neuralNetwork.LayersCount; layerIndex++)
+            for (var layerIndex = 1; layerIndex < neuralNetwork.LayersCount; layerIndex++)
             {
                 var layer = neuralNetwork[layerIndex];
 
@@ -18,10 +18,9 @@ namespace QuickMachineLearning
 
                     var weights = neuron.Weights;
                     for (var i = 0; i < weights.Length; i++)
-                        weights[i] = (float)random.NextDouble();
+                        weights[i] = (float)random.NextDouble() / weights.Length;
 
-                    if (layerIndex != 0)
-                        neuron.Bias = (float)random.NextDouble();
+                    neuron.Bias = (float)random.NextDouble() * 2f - 1f;
                 }
             }
         }
@@ -52,14 +51,14 @@ namespace QuickMachineLearning
                         if (mutateWeightIndex == 0)
                             neuron.Bias += mutationStrength;
                         else
-                            neuron.Weights[mutateWeightIndex - 1] += mutationStrength;
+                            neuron.Weights[mutateWeightIndex - 1] += mutationStrength / neuron.Weights.Length;
 
                         break;
                     }
                 }
             }
         }
-    
+
         public static void ClampWeights(this FeedforwardNeuralNetwork neuralNetwork, float min, float max)
         {
             for (var layerIndex = 0; layerIndex < neuralNetwork.LayersCount; layerIndex++)

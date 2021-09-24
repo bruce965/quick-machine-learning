@@ -49,7 +49,7 @@ namespace QuickMachineLearning
         {
             public Layer Layer { get; }
             public int NeuronIndex { get; }
-            
+
             public bool IsInputNeuron => Layer.IsInputLayer;
             public bool IsOutputNeuron => Layer.IsOutputLayer;
 
@@ -90,7 +90,7 @@ namespace QuickMachineLearning
             }
         }
 
-        const int MagicNumber = 0x46464e31;  // "QFN1"
+        const int MagicNumber = 0x314e4651;  // "QFN1"
 
         public int LayersCount => _layerNeurons.Length;
 
@@ -196,7 +196,7 @@ namespace QuickMachineLearning
                 var layer = neuralNetwork[layerIndex];
                 layer.ActivationFunction = layerActivationFunctions[layerIndex - 1];
             }
-            
+
             for (var i = 0; i < neuralNetwork._weightsAndBiases.Length; i++)
                 neuralNetwork._weightsAndBiases[i] = reader.ReadSingle();
 
